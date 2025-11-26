@@ -1,0 +1,5 @@
+{
+  "name": "Ahmed Salah — Philosophy & Psychology Tutor",
+  "description": "A frontend-only Next.js web application for an academic tutor, featuring booking management, schedules, and Q&A systems with a strict RTL mobile-first design.",
+  "requestFramePermissions": []
+}
