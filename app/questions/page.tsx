@@ -1,39 +1,17 @@
 import React from 'react';
 import { Button } from '@/components/Button';
+import { promises as fs } from 'fs';
+import path from 'path';
 
-// Static mock data
-const questions = [
-  {
-    "id": "q1",
-    "user_id": "u2",
-    "user_name": "محمد أحمد",
-    "class_id": "c1",
-    "content": "هل الاستنباط الرياضي يعتمد على التجربة الحسية؟",
-    "status": "answered",
-    "created_at": "2023-11-01T10:00:00Z",
-    "answers": [
-      {
-        "id": "a1",
-        "question_id": "q1",
-        "teacher_id": "t1",
-        "content": "لا يا محمد، الاستنباط الرياضي عملية عقلية خالصة لا تعتمد على التجربة المادية في العالم الخارجي.",
-        "created_at": "2023-11-01T12:00:00Z"
-      }
-    ]
-  },
-  {
-    "id": "q2",
-    "user_id": "u3",
-    "user_name": "سارة علي",
-    "class_id": "c2",
-    "content": "ممكن توضيح الفرق بين القلق الموضوعي والقلق المرضي؟",
-    "status": "open",
-    "created_at": "2023-11-02T09:30:00Z",
-    "answers": []
-  }
-];
+async function getQuestions() {
+  const filePath = path.join((process as any).cwd(), 'public/data/questions.json');
+  const fileContents = await fs.readFile(filePath, 'utf8');
+  return JSON.parse(fileContents);
+}
 
-export default function QuestionsPage() {
+export default async function QuestionsPage() {
+  const questions = await getQuestions();
+
   return (
     <div className="max-w-4xl mx-auto px-5 py-section">
       <div className="flex justify-between items-center mb-8">
@@ -42,7 +20,7 @@ export default function QuestionsPage() {
       </div>
 
       <div className="space-y-6">
-        {questions.map((q) => (
+        {questions.map((q: any) => (
           <div key={q.id} className="bg-white rounded-card p-6 shadow-sm border border-secondary-2">
             <div className="flex justify-between items-start mb-4">
               <div className="flex items-center gap-2">

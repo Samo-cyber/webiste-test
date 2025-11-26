@@ -1,41 +1,18 @@
 import React from 'react';
 import { Button } from '@/components/Button';
+import { promises as fs } from 'fs';
+import path from 'path';
 
-// Static mock data to ensure client-side rendering without fs/Node.js
-const schedules = [
-  {
-    "id": "s1",
-    "class_id": "c1",
-    "title": "مراجعة علم نفس (الباب الأول)",
-    "start_at": "2023-11-20T14:00:00.000Z",
-    "end_at": "2023-11-20T16:00:00.000Z",
-    "capacity": 50,
-    "remaining": 12,
-    "location": "سنتر الأوائل"
-  },
-  {
-    "id": "s2",
-    "class_id": "c2",
-    "title": "فلسفة ومنطق - حصة شرح",
-    "start_at": "2023-11-21T18:00:00.000Z",
-    "end_at": "2023-11-21T20:00:00.000Z",
-    "capacity": 100,
-    "remaining": 45,
-    "location": "أونلاين (Zoom)"
-  },
-  {
-    "id": "s3",
-    "class_id": "c1",
-    "title": "حل أسئلة شاملة",
-    "start_at": "2023-11-22T15:00:00.000Z",
-    "end_at": "2023-11-22T17:00:00.000Z",
-    "capacity": 40,
-    "remaining": 2,
-    "location": "سنتر الهرم"
-  }
-];
+// Helper to simulate fetching from the static file
+async function getSchedules() {
+  const filePath = path.join((process as any).cwd(), 'public/data/schedules.json');
+  const fileContents = await fs.readFile(filePath, 'utf8');
+  return JSON.parse(fileContents);
+}
 
-export default function SchedulesPage() {
+export default async function SchedulesPage() {
+  const schedules = await getSchedules();
+
   return (
     <div className="max-w-4xl mx-auto px-5 py-section">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
@@ -55,7 +32,7 @@ export default function SchedulesPage() {
       </div>
 
       <div className="space-y-4">
-        {schedules.map((item) => (
+        {schedules.map((item: any) => (
           <div key={item.id} className="bg-white p-6 rounded-card shadow-sm border border-secondary-2 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">

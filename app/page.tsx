@@ -3,16 +3,22 @@ import Link from 'next/link';
 import { Button } from '@/components/Button';
 import { PlaceholderHero, PlaceholderCard } from '@/components/SVGPlaceholders';
 
-// Static data for home
-const data = {
-  classes: [
-    { id: '1', title: 'علم النفس - الصف الثالث', description: 'مراجعة شاملة للباب الأول' },
-    { id: '2', title: 'فلسفة - الصف الثاني', description: 'أساسيات المنطق الحديث' },
-    { id: '3', title: 'علم الاجتماع', description: 'النظريات الاجتماعية المعاصرة' },
-  ]
-};
+async function getData() {
+  // Simulate API delay
+  await new Promise(resolve => setTimeout(resolve, 100));
+  // In a real app, fetch from Supabase here
+  return {
+    classes: [
+      { id: '1', title: 'علم النفس - الصف الثالث', description: 'مراجعة شاملة للباب الأول' },
+      { id: '2', title: 'فلسفة - الصف الثاني', description: 'أساسيات المنطق الحديث' },
+      { id: '3', title: 'علم الاجتماع', description: 'النظريات الاجتماعية المعاصرة' },
+    ]
+  };
+}
 
-export default function Home() {
+export default async function Home() {
+  const data = await getData();
+
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
